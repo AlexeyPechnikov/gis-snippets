@@ -54,7 +54,7 @@ https://blog.kitware.com/developing-hdf5-readers-using-vtkpythonalgorithm/
 import vtk, h5py
 from vtk.util import numpy_support
 
-filename = "/Users/mbg/Documents/PVGeo-Examples/h5/data60.h5"
+filename = "data60.h5"
 f = h5py.File(filename, 'r')
 data = f['RTData'][:]
 
@@ -82,7 +82,7 @@ import vtk, h5py
 from vtk.util import numpy_support
 from vtk.numpy_interface import dataset_adapter as dsa
 
-filename = "/Users/mbg/Documents/PVGeo-Examples/h5/data60.h5"
+filename = "data60.h5"
 f = h5py.File(filename, 'r')
 data = f['RTData'][:]
 
