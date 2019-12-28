@@ -37,7 +37,7 @@ Some data files required from ParaView project for geological exploration on El 
 
 RequestInformation Script is not required for vtkMultiblockDataSet output.
 
-### vtkMultiblockDataSet (read EPSG:32614 drill locations CSV and EPSG:32614 topology GeoTIFF)
+### vtkMultiblockDataSet (read EPSG:32614 drill locations CSV and EPSG:32614 topography GeoTIFF)
 
 For better visialization turn on "Render Lines as Tubes" checkbox and set "Line Width" equal to 10.
 
@@ -118,7 +118,7 @@ for idx,well in df.iterrows():
 ```
 ![ParaView ProgrammableSource MultiblockDataSet2](ParaView_ProgrammableSource_MultiblockDataSet2.jpg)
 
-### vtkMultiblockDataSet (read WGS84 volcano shapefile and EPSG:32639 topology GeoTIFF)
+### vtkMultiblockDataSet (read WGS84 volcano shapefile and EPSG:32639 topography GeoTIFF)
 
 For better visialization turn on "Render Points as Spheres" checkbox and set "Point Size" equal to 20.
 
@@ -180,7 +180,7 @@ for rowidx, row in shp.reset_index().iterrows():
 
 RequestInformation Script is not required for vtkPolyData output.
 
-### vtkPolyData (read EPSG:32639 topology GeoTIFF and convert to ParaView surface)
+### vtkPolyData (read EPSG:32639 topography GeoTIFF and convert to ParaView surface)
 
 #### Script
 ```
@@ -228,7 +228,7 @@ self.GetPolyDataOutput().ShallowCopy(outputPolyData)
 ```
 ![ParaView ProgrammableSource PolyData](ParaView_ProgrammableSource_PolyData2.jpg)
 
-### vtkPolyData (read WGS84 volcano Shapefile and EPSG:32639 topology GeoTIFF)
+### vtkPolyData (read WGS84 volcano Shapefile and EPSG:32639 topography GeoTIFF)
 
 #### Script
 ```
