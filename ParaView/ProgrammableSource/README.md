@@ -130,10 +130,6 @@ util.SetOutputWholeExtent(self, extent)
 
 ### vtkImageData (pre-defined data)
 
-https://www.paraview.org/Wiki/Python_Programmable_Filter
-
-https://stackoverflow.com/questions/7666981/how-to-set-data-values-on-a-vtkstructuredgrid
-
 #### Script
 ```
 import vtk
@@ -160,8 +156,6 @@ self.GetImageDataOutput().ShallowCopy(grid)
 ![ParaView ProgrammableSource ImageData](ParaView_ProgrammableSource_ImageData.jpg)
 
 ### vtkImageData (read HDF5 data file)
-
-https://blog.kitware.com/developing-hdf5-readers-using-vtkpythonalgorithm/
 
 #### Script
 ```
@@ -218,3 +212,10 @@ grid.PointData.SetActiveScalars('RTData')
 ```
 ![ParaView ProgrammableSource ImageData](ParaView_ProgrammableSource_ImageData2.jpg)
 
+## References
+
+https://www.paraview.org/Wiki/Python_Programmable_Filter
+
+https://stackoverflow.com/questions/7666981/how-to-set-data-values-on-a-vtkstructuredgrid
+
+https://blog.kitware.com/developing-hdf5-readers-using-vtkpythonalgorithm/
