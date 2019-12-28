@@ -40,6 +40,8 @@ array.SetName("unit array")
 self.GetImageDataOutput().ShallowCopy(grid)
 ```
 
+![ParaView ProgrammableSource ImageData](ParaView_ProgrammableSource_ImageData.jpg)
+
 ### vtkImageData (read HDF5 data file)
 
 https://blog.kitware.com/developing-hdf5-readers-using-vtkpythonalgorithm/
@@ -69,7 +71,7 @@ array.SetName("RTData")
 
 self.GetImageDataOutput().ShallowCopy(grid)
 ```
-
+![ParaView ProgrammableSource ImageData](ParaView_ProgrammableSource_ImageData2.jpg)
 
 #### Script works with output object directly
 ```
@@ -97,3 +99,5 @@ array.SetName("RTData")
 
 grid.PointData.SetActiveScalars('RTData')
 ```
+![ParaView ProgrammableSource ImageData](ParaView_ProgrammableSource_ImageData2.jpg)
+
