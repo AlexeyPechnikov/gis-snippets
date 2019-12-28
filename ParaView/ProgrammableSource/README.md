@@ -180,6 +180,54 @@ for rowidx, row in shp.reset_index().iterrows():
 
 RequestInformation Script is not required for vtkPolyData output.
 
+### vtkPolyData (read EPSG:32639 topology GeoTIFF and convert to ParaView surface)
+
+#### Script
+```
+import vtk
+import numpy as np
+import xarray as xr
+import pandas as pd
+
+DEM = "/Users/mbg/Documents/ALOS/ALOS_AW3D30_v1903.subset.32614.30m.tif"
+
+dem = xr.open_rasterio(DEM)
+epsg = int(dem.crs.split(':')[1])
+print (epsg)
+
+# create input points from raster pixels
+df = dem.to_dataframe(name='z').reset_index()
+points = vtk.vtkPoints()
+for row in df.itertuples():
+    points.InsertNextPoint(row.x, row.y, row.z)
+
+# create 2D Delaunay triangulation of input points
+aPolyData = vtk.vtkPolyData()
+aPolyData.SetPoints(points)
+aCellArray = vtk.vtkCellArray()
+boundary = vtk.vtkPolyData()
+print ("boundary",boundary)
+boundary.SetPoints(aPolyData.GetPoints())
+boundary.SetPolys(aCellArray)
+delaunay = vtk.vtkDelaunay2D()
+delaunay.SetTolerance(0.001)
+delaunay.SetInputData(aPolyData)
+delaunay.SetSourceData(boundary)
+
+delaunay.Update()
+
+# add z coordinates
+outputPolyData = delaunay.GetOutput()
+array = vtk.vtkFloatArray()
+array.SetName("z");
+for i in range(0, outputPolyData.GetNumberOfPoints()):
+    array.InsertNextValue(outputPolyData.GetPoint(i)[2])
+outputPolyData.GetPointData().SetScalars(array)
+
+self.GetPolyDataOutput().ShallowCopy(outputPolyData)
+```
+![ParaView ProgrammableSource PolyData](ParaView_ProgrammableSource_PolyData2.jpg)
+
 ### vtkPolyData (read WGS84 volcano Shapefile and EPSG:32639 topology GeoTIFF)
 
 #### Script
