@@ -1,3 +1,12 @@
+## Test data files
+Test data files required:
+
+[1] https://github.com/mobigroup/ParaView-MoshaFault/blob/master/data/GEBCO_2019/GEBCO_2019.subset.32639.0.5km.tif
+
+[2] Damavand.shp see here https://github.com/mobigroup/ParaView-MoshaFault/tree/master/data/volcano
+
+[3] data60.h5 generated as described in [3]
+
 ## vtkMultiblockDataSet
 
 RequestInformation Script is not required for vtkMultiblockDataSet output.
@@ -214,8 +223,8 @@ grid.PointData.SetActiveScalars('RTData')
 
 ## References
 
-https://www.paraview.org/Wiki/Python_Programmable_Filter
+[1] https://www.paraview.org/Wiki/Python_Programmable_Filter
 
-https://stackoverflow.com/questions/7666981/how-to-set-data-values-on-a-vtkstructuredgrid
+[2] https://stackoverflow.com/questions/7666981/how-to-set-data-values-on-a-vtkstructuredgrid
 
-https://blog.kitware.com/developing-hdf5-readers-using-vtkpythonalgorithm/
+[3] https://blog.kitware.com/developing-hdf5-readers-using-vtkpythonalgorithm/
