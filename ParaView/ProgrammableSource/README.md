@@ -1,6 +1,16 @@
-## Data files
+## Install Python modules
 
-Some data files required from ParaView project for geological exploration on El Cobre Property, Veracruz, Mexico and ParaView project for geological exploration on Mosha fault area, North Iran:
+Follow instructions to install Python 2.7 and configure PYTHONPATH environment variable as this article describing:
+https://www.linkedin.com/pulse/paraview-pvgeo-plugins-howto-alexey-pechnikov/
+
+Install additional Python 2.7 modules required for the code below:
+```
+pip2.7 install numpy xarray pandas geopandas vtk h5py
+```
+
+## Prepare data files
+
+Some data files required from ParaView project for geological exploration on El Cobre Property, Veracruz, Mexico and ParaView project for geological exploration on Mosha fault area, North Iran. Download the files by the links and place them to paths in the code below or change the paths in the code for your data file locations.
 
 [1] https://github.com/mobigroup/ParaView-ElCobreMexico/blob/master/data/ALOS/ALOS_AW3D30_v1903.subset.32614.30m.tif
 
