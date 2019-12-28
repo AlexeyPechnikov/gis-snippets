@@ -1,3 +1,63 @@
+## vtkMultiblockDataSet
+
+RequestInformation Script is not required for vtkMultiblockDataSet output.
+
+### vtkMultiblockDataSet (read WGS84 volcano shapefile and EPSG:32639 topology geotif)
+
+#### Script
+```
+import vtk
+import xarray as xr
+import geopandas as gpd
+
+SHP = "/Users/mbg/Documents/volcano/Damavand.shp"
+DEM="/Users/mbg/Documents/GEBCO_2019/GEBCO_2019.subset.32639.0.5km.tif"
+
+dem = xr.open_rasterio(DEM)
+epsg = int(dem.crs.split(':')[1])
+print (epsg)
+
+shp = gpd.read_file(SHP)
+print (len(shp), shp.crs)
+
+# Reproject if needed
+if shp.crs == {}:
+    # coordinate system is not defined, use WGS84 as default
+    shp.crs = {'init': 'epsg:4326'}
+shp['geometry'] = shp['geometry'].to_crs(epsg=epsg)
+
+# get output tkMultiBlockDataSet()
+print ("output",self.GetOutput().IsA("vtkMultiBlockDataSet"))
+mb = self.GetOutput()
+mb.SetNumberOfBlocks(len(shp))
+
+for rowidx, row in shp.reset_index().iterrows():
+    geom = row.geometry
+
+    x = geom.x
+    y = geom.y
+    z = float(dem.sel(x=x,y=y,method='nearest'))
+
+    # Create a polydata object
+    point = vtk.vtkPolyData()
+
+    # Create the geometry of a point (the coordinate)
+    _points = vtk.vtkPoints()
+    # Create the topology of the point (a vertex)
+    _vertices = vtk.vtkCellArray()
+    
+    id = _points.InsertNextPoint([x,y,z])
+    _vertices.InsertNextCell(1)
+    _vertices.InsertCellPoint(id)
+    # Set the points and vertices we created as the geometry and topology of the polydata
+    point.SetPoints(_points)
+    point.SetVerts(_vertices)
+
+    mb.SetBlock( rowidx, point )
+    mb.GetMetaData( rowidx ).Set( vtk.vtkCompositeDataSet.NAME(), str(rowidx) )
+```
+![ParaView ProgrammableSource MultiblockDataSet](ParaView_ProgrammableSource_MultiblockDataSet.jpg)
+
 ## vtkPolyData
 
 RequestInformation Script is not required for vtkPolyData output.
