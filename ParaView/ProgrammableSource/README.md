@@ -1,5 +1,8 @@
 ## vtkImageData
 
+Generate simple HDF5 files as described by this link
+https://blog.kitware.com/developing-hdf5-readers-using-vtkpythonalgorithm/
+
 Add the scripts to textareas and turn off checkbox "Map scalars" and edit any script and click "Apply" (ignore all error messages) and turn on the checkbox again. Without this magic we can't see the output geometries!
 
 #### Script (RequestInformation)
