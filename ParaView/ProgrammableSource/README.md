@@ -1,5 +1,7 @@
 ## vtkImageData
 
+Add the scripts to textareas and turn off checkbox "Map scalars" and edit any script and click "Apply" (ignore all error messages) and turn on the checkbox again. Without this magic we can't see the output geometries!
+
 #### Script (RequestInformation)
 ```
 from paraview import util
@@ -66,4 +68,32 @@ grid.GetPointData().AddArray(array)
 array.SetName("RTData")
 
 self.GetImageDataOutput().ShallowCopy(grid)
+```
+
+
+#### Script works with output object directly
+```
+import vtk, h5py
+from vtk.util import numpy_support
+from vtk.numpy_interface import dataset_adapter as dsa
+
+filename = "/Users/mbg/Documents/PVGeo-Examples/h5/data60.h5"
+f = h5py.File(filename, 'r')
+data = f['RTData'][:]
+
+dx = 1.0
+grid = dsa.WrapDataObject(self.GetImageDataOutput())
+grid.SetOrigin(0, 0, 0) # default values
+grid.SetSpacing(dx, dx, dx)
+# Note that we flip the dimensions here because
+# VTK's order is Fortran whereas h5py writes in
+# C order.
+grid.SetDimensions(data.shape[::-1]) # number of points in each direction
+
+array = numpy_support.numpy_to_vtk(data.ravel(), deep=True, array_type=vtk.VTK_FLOAT) 
+grid.GetPointData().AddArray(array)
+# print grid.GetPointData().GetNumberOfArrays()
+array.SetName("RTData")
+
+grid.PointData.SetActiveScalars('RTData')
 ```
