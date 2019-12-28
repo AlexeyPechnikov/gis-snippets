@@ -16,7 +16,7 @@ https://www.linkedin.com/pulse/paraview-pvgeo-plugins-howto-alexey-pechnikov/
 
 Install additional Python 2.7 modules required for the code below:
 ```
-pip2.7 install numpy xarray pandas geopandas vtk h5py
+pip2.7 install numpy xarray pandas geopandas shapely vtk h5py
 ```
 
 ## Prepare data files
@@ -27,11 +27,13 @@ Some data files required from ParaView project for geological exploration on El 
 
 (2) https://github.com/mobigroup/ParaView-ElCobreMexico/blob/master/data/Appendix%201%20-%20El%20Cobre%20Property%20Drill%20Hole%20Locations.csv
 
-(3) https://github.com/mobigroup/ParaView-MoshaFault/blob/master/data/GEBCO_2019/GEBCO_2019.subset.32639.0.5km.tif
+(3) aoi_cobra.32614.shp see here https://github.com/mobigroup/ParaView-ElCobreMexico/tree/master/data/aoi_cobra
 
-(4) Damavand.shp see here https://github.com/mobigroup/ParaView-MoshaFault/tree/master/data/volcano
+(4) https://github.com/mobigroup/ParaView-MoshaFault/blob/master/data/GEBCO_2019/GEBCO_2019.subset.32639.0.5km.tif
 
-(5) data60.h5 generated as described in [3]
+(5) Damavand.shp see here https://github.com/mobigroup/ParaView-MoshaFault/tree/master/data/volcano
+
+(6) data60.h5 generated as described in [3]
 
 ## vtkMultiblockDataSet
 
@@ -179,6 +181,74 @@ for rowidx, row in shp.reset_index().iterrows():
 ## vtkPolyData
 
 RequestInformation Script is not required for vtkPolyData output.
+
+### vtkPolyData (read EPSG:32639 AOI shapefile and EPSG:32639 topography GeoTIFF and convert only topography for the area to ParaView surface)
+
+#### Script
+```
+import vtk
+import numpy as np
+import xarray as xr
+import pandas as pd
+import geopandas as gpd
+import shapely as sp
+
+SHP = "/Users/mbg/Documents/SHP/aoi_cobra.32614.shp"
+DEM = "/Users/mbg/Documents/ALOS/ALOS_AW3D30_v1903.subset.32614.30m.tif"
+
+# Load DEM
+dem = xr.open_rasterio(DEM)
+epsg = int(dem.crs.split(':')[1])
+print (epsg)
+
+# Load shapefile
+shp = gpd.read_file(SHP)
+
+# Reproject if needed
+if shp.crs == {}:
+    # coordinate system is not defined, use WGS84 as default
+    shp.crs = {'init': 'epsg:4326'}
+shp['geometry'] = shp['geometry'].to_crs(epsg=epsg)
+
+# calculate 1st geometry extent
+(minx, miny, maxx, maxy) = shp.loc[0,'geometry'].bounds
+# create raster dataframe for the geometry extent only
+df = dem.sel(x=slice(minx,maxx),y=slice(maxy,miny)).to_dataframe('z').reset_index()[['x','y','z']]
+
+# create geodataframe from the raster
+geometry = [sp.geometry.Point(x,y) for x,y in zip(df.x,df.y)]
+gdf = gpd.GeoDataFrame([], crs=dem.crs, geometry=geometry)
+# crop the raster geodataframe by the exact 1st geometry
+df = df[gdf.intersects(shp.loc[0,'geometry'])]
+
+points = vtk.vtkPoints()
+for row in df.itertuples():
+    points.InsertNextPoint(row.x, row.y, row.z)
+
+aPolyData = vtk.vtkPolyData()
+aPolyData.SetPoints(points)
+aCellArray = vtk.vtkCellArray()
+boundary = vtk.vtkPolyData()
+print ("boundary",boundary)
+boundary.SetPoints(aPolyData.GetPoints())
+boundary.SetPolys(aCellArray)
+delaunay = vtk.vtkDelaunay2D()
+delaunay.SetTolerance(0.001)
+delaunay.SetInputData(aPolyData)
+delaunay.SetSourceData(boundary)
+
+delaunay.Update()
+
+outputPolyData = delaunay.GetOutput()
+array = vtk.vtkFloatArray()
+array.SetName("z");
+for i in range(0, outputPolyData.GetNumberOfPoints()):
+    array.InsertNextValue(outputPolyData.GetPoint(i)[2])
+outputPolyData.GetPointData().SetScalars(array)
+
+self.GetPolyDataOutput().ShallowCopy(outputPolyData)
+```
+![ParaView ProgrammableSource PolyData](ParaView_ProgrammableSource_PolyData2.jpg)
 
 ### vtkPolyData (read EPSG:32639 topography GeoTIFF and convert to ParaView surface)
 
