@@ -130,7 +130,7 @@ for idx,well in df.iterrows():
     mb.SetBlock( idx, polyData )
     mb.GetMetaData( idx ).Set( vtk.vtkCompositeDataSet.NAME(), well['label'] )
 ```
-![ParaView ProgrammableFilter MultiblockDataSet2](ParaView_ProgrammableFilter_MultiblockDataSet.jpg)
+![ParaView ProgrammableFilter MultiblockDataSet](ParaView_ProgrammableFilter_MultiblockDataSet.jpg)
 
 ## References
 
