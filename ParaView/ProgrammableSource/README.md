@@ -1,4 +1,4 @@
-# How to load data into ParaView using it's ProgrammableSource data source
+## How to load data into ParaView using it's ProgrammableSource feature
 
 There are some different ways to enhance ParaView features by custom Python code:
 
