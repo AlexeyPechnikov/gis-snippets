@@ -39,7 +39,7 @@ Some data files required from ParaView project for geological exploration on El 
 
 RequestInformation Script is not required for vtkMultiblockDataSet output.
 
-### vtkMultiblockDataSet (read EPSG:32614 drill locations CSV and EPSG:32614 topography GeoTIFF)
+### vtkMultiblockDataSet (read EPSG:32614 drill locations CSV)
 
 For better visialization turn on "Render Lines as Tubes" checkbox and set "Line Width" equal to 10.
 
@@ -450,3 +450,9 @@ grid.PointData.SetActiveScalars('RTData')
 [2] https://stackoverflow.com/questions/7666981/how-to-set-data-values-on-a-vtkstructuredgrid
 
 [3] https://blog.kitware.com/developing-hdf5-readers-using-vtkpythonalgorithm/
+
+[4] https://github.com/Kitware/VTK/blob/master/Examples/Infovis/Python/tables_adv.py
+
+[5] https://gitlab.kitware.com/edf/vtk/blob/b606c86a5b3b3412f8e500e40b1de44537dd2135/Wrapping/Python/vtk/numpy_interface/dataset_adapter.py
+
+[6] https://www.paraview.org/Wiki/Python_calculator_and_programmable_filter
