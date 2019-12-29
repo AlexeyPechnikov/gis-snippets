@@ -51,12 +51,8 @@ import xarray as xr
 import pandas as pd
 
 CSV = "/Users/mbg/Documents/WELLS/Appendix 1 - El Cobre Property Drill Hole Locations.csv"
-DEM = "/Users/mbg/Documents/ALOS/ALOS_AW3D30_v1903.subset.32614.30m.tif"
 
-dem = xr.open_rasterio(DEM)
-epsg = int(dem.crs.split(':')[1])
-print (epsg)
-
+# read datafile and rename columns to easy use
 df = pd.read_csv(CSV).rename(columns={'Easting': 'x','Northing':'y','Elevation':'z'})
 # https://en.wikipedia.org/wiki/Spherical_coordinate_system
 # Spherical coordinates (r, θ, φ) as often used in mathematics:
