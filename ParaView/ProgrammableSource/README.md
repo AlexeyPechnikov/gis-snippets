@@ -47,7 +47,6 @@ For better visialization turn on "Render Lines as Tubes" checkbox and set "Line 
 ```
 import vtk
 import numpy as np
-import xarray as xr
 import pandas as pd
 
 CSV = "/Users/mbg/Documents/WELLS/Appendix 1 - El Cobre Property Drill Hole Locations.csv"
