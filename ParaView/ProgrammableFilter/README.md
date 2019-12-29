@@ -1,4 +1,4 @@
-# How to load data into ParaView using it's ProgrammableFilter feature
+## How to load data into ParaView using it's ProgrammableFilter feature
 
 There are some different ways to enhance ParaView features by custom Python code:
 
