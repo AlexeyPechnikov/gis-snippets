@@ -7,7 +7,7 @@ There are some different ways to enhance ParaView features by custom Python code
 3. Use [Programmable Filter](../ProgrammableFilter/README.md) (the best way for custom code with pipeline input and the complete processing pipeline),
 4. Use Plugins (the best way for well formalized code modules).
 
-Below use explaining the way #2. In this case we use Python code with is integrated into ParaView processing pipeline but it's not depends of the other pipeline objects. Way #3 is very similar but it depends of other pipeline items.
+Below use explaining the way #2. In this case we use Python code integrated into ParaView processing pipeline without dependencies to other pipeline objects. Way #3 is very similar but it depends of other pipeline items.
 
 [Install Python modules](../install.md)
 
