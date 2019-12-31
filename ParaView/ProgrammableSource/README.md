@@ -23,7 +23,9 @@ Below use explaining the way #2. In this case we use Python code integrated into
 
 [References](../references.md)
 
-## 
+## Complex scripts
+
+This script can process shapefiles (see http://www.naturalearthdata.com for example) to ParaView vtkMultiblockDataSet and vtkPolyData (select the required "Output Data Set Type"). Optional topography raster supported to produce Z coordinates.
 
 [ProgrammableSource vtkMultiBlockDataSet and vtkAppendPolyData for shapefiles](ParaView_ProgrammableSource_geometries.py)
 
