@@ -23,3 +23,8 @@ Below use explaining the way #2. In this case we use Python code integrated into
 
 [References](../references.md)
 
+## 
+
+[ProgrammableSource vtkMultiBlockDataSet and vtkAppendPolyData for shapefiles](ParaView_ProgrammableSource_geometries.py)
+
+![ParaView_ProgrammableSource_geometries](ParaView_ProgrammableSource_geometries.jpg)
