@@ -167,3 +167,78 @@ for rowidx, row in shp.reset_index().iterrows():
 self.GetPolyDataOutput().ShallowCopy(point)
 ```
 ![ParaView ProgrammableSource PolyData](ParaView_ProgrammableSource_PolyData.jpg)
+
+### vtkPolyData (generate triangulated colored mesh)
+
+#### Script
+```
+import vtk
+import random
+import numpy
+
+# Make a 32 x 32 grid
+size = 32
+
+# Define z values for the topography (random height)
+topography = numpy.random.randint(0,5,size=(size,size))
+
+# Define points, triangles and colors
+colors = vtk.vtkUnsignedCharArray()
+colors.SetNumberOfComponents(3)
+colors.SetName("Colors")
+points = vtk.vtkPoints()
+triangles = vtk.vtkCellArray()
+
+# Build the meshgrid manually
+count = 0
+for i in range(size-1):
+    for j in range(size-1):
+        
+        # Triangle 1
+        points.InsertNextPoint(i, j,     topography[i][j])
+        points.InsertNextPoint(i, (j+1), topography[i][j+1])
+        points.InsertNextPoint((i+1), j, topography[i+1][j])
+        
+        triangle = vtk.vtkTriangle()
+        triangle.GetPointIds().SetId(0, count)
+        triangle.GetPointIds().SetId(1, count + 1)
+        triangle.GetPointIds().SetId(2, count + 2)
+        
+        triangles.InsertNextCell(triangle)
+        
+        # Triangle 2
+        points.InsertNextPoint(i, (j+1),     topography[i][j+1])
+        points.InsertNextPoint((i+1), (j+1), topography[i+1][j+1])
+        points.InsertNextPoint((i+1), j,     topography[i+1][j])
+        
+        triangle = vtk.vtkTriangle()
+        triangle.GetPointIds().SetId(0, count + 3)
+        triangle.GetPointIds().SetId(1, count + 4)
+        triangle.GetPointIds().SetId(2, count + 5)
+        
+        triangles.InsertNextCell(triangle)
+
+        count += 6
+
+        # Add some color
+        r = int(i/float(size)*255)
+        g = int(j/float(size)*255)
+        for _ in range(6):
+            colors.InsertNextTuple3(r,g,0)
+
+# Create a polydata object
+trianglePolyData = vtk.vtkPolyData()
+
+# Add the geometry and topology to the polydata
+trianglePolyData.SetPoints(points)
+trianglePolyData.GetPointData().SetScalars(colors)
+trianglePolyData.SetPolys(triangles)
+
+# Clean the polydata so that the edges are shared !
+cleanPolyData = vtk.vtkCleanPolyData()
+cleanPolyData.SetInputData(trianglePolyData)
+cleanPolyData.Update()
+
+self.GetPolyDataOutput().ShallowCopy(cleanPolyData.GetOutput())
+```
+![ParaView ProgrammableSource PolyData0](ParaView_ProgrammableSource_PolyData0.jpg)
