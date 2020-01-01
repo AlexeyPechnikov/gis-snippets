@@ -15,4 +15,6 @@ Below use explaining the way #3. In this case we use Python code integrated into
 
 [ProgrammableFilter vtkMultiblockDataSet](vtkMultiblockDataSet.md)
 
+[ProgrammableFilter vtkPolyData](vtkPolyData.md)
+
 [References](../references.md)
