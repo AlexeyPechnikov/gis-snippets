@@ -29,3 +29,5 @@
 [14] https://vtk.org/Wiki/VTK/Examples/Python/DataManipulation/LineOnMesh
 
 [15] https://vtk.org/Wiki/VTK/Examples/Python/PolyData/SubdivisionFilters
+
+[16] https://gitlab.kitware.com/paraview/paraview/blob/master/Examples/Plugins/PythonAlgorithm/PythonAlgorithmExamples.py
