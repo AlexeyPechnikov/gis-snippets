@@ -5,5 +5,5 @@ https://www.linkedin.com/pulse/paraview-pvgeo-plugins-howto-alexey-pechnikov/
 
 Install additional Python 2.7 modules required for the code below:
 ```
-pip2.7 install numpy xarray pandas geopandas shapely vtk h5py
+pip2.7 install numpy xarray pandas geopandas shapely vtk h5py rtree
 ```
