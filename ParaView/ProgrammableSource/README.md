@@ -21,6 +21,8 @@ Below use explaining the way #2. In this case we use Python code integrated into
 
 [ProgrammableSource vtkImageData](vtkImageData.md)
 
+[ProgrammableSource vtkStructuredGrid](vtkStructuredGrid.md)
+
 [References](../references.md)
 
 ## Complex scripts
