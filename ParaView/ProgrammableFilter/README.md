@@ -13,6 +13,8 @@ Below use explaining the way #3. In this case we use Python code integrated into
 
 [Prepare data files](../datafiles.md)
 
+[ProgrammableFilter vtkStructuredGrid](vtkStructuredGrid.md)
+
 [ProgrammableFilter vtkMultiblockDataSet](vtkMultiblockDataSet.md)
 
 [ProgrammableFilter vtkPolyData](vtkPolyData.md)
