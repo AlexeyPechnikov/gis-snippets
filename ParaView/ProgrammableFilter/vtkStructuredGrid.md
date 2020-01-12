@@ -1,5 +1,24 @@
 ## vtkStructuredGrid
 
+### vtkStructuredGrid (limit histogram filter for percentiles range 5...95)
+
+#### Script
+```
+from vtk.util.numpy_support import vtk_to_numpy
+import numpy as np
+
+# get input data
+vtk_arr = inputs[0].PointData['trace']
+arr = vtk_to_numpy(vtk_arr)
+
+# process
+pcnt = np.nanpercentile(arr,[5,95])
+arr2 = np.clip(arr,pcnt[0],pcnt[1])
+
+# set output data
+output.PointData.append(arr2, "arr")
+```
+
 ### vtkStructuredGrid (IDW filter with degree=-2 and k=30 nearest neighbors)
 
 #### Script
