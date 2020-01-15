@@ -13,6 +13,7 @@ For better visialization turn on "Render Lines as Tubes" checkbox and set "Line 
 import vtk
 import numpy as np
 import pandas as pd
+import math
 
 vtk_table = self.GetTableInput()
 # table headers
