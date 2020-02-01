@@ -23,7 +23,7 @@ Below use explaining the way #3. In this case we use Python code integrated into
 
 ## Complex scripts
 
-This script reproject Unstructured Grid between to coordinate systems defined by EPSG codes.
+This script reproject vtkUnstructuredGrid between to coordinate systems defined by EPSG codes.
 
 ```
 import numpy as np
@@ -65,4 +65,50 @@ print (ugrid)
 t1 = time.time()
 print ("t1-t0", t1-t0)
 ```
-![ParaView_ProgrammableFilter_reproject.jpg](ParaView_ProgrammableFilter_reproject.jpg)
+![ParaView_ProgrammableFilter_reproject](ParaView_ProgrammableFilter_reproject.jpg)
+
+This script reproject vtkPolyData between to coordinate systems defined by EPSG codes.
+
+```
+import numpy as np
+import geopandas as gpd
+from shapely.geometry import Point
+from vtk.util import numpy_support as vn
+from vtk import vtkPoints, vtkPolyData, VTK_FLOAT
+import time
+
+t0 = time.time()
+
+pdi = self.GetInput()
+pdo =  self.GetOutput()
+
+polyData = vtkPolyData()
+polyData.DeepCopy(pdi)
+
+coords = polyData.GetPoints().GetData()
+ncoords = vn.vtk_to_numpy(coords)
+geom = gpd.GeoSeries(map(Point, zip(ncoords[:,0], ncoords[:,1], ncoords[:,2])))
+geom.crs = {'init': 'epsg:32750'}
+geom = geom.to_crs({'init': 'epsg:3857'})
+print(geom.tail())
+
+vtk_points = vtkPoints()
+points = np.asarray([g.coords[0] for g in geom])
+_points = vn.numpy_to_vtk(points, deep=True)
+vtk_points.SetData(_points)
+
+polyData.SetPoints(vtk_points)
+
+#array = vn.numpy_to_vtk(ncoords[:,2], deep=True, array_type=VTK_FLOAT)
+#array.SetName("z")
+#polyData.GetPointData().AddArray(array)
+
+pdo.ShallowCopy(polyData)
+print (polyData)
+
+t1 = time.time()
+print ("t1-t0", t1-t0)
+```
+
+![ParaView_ProgrammableFilter_reproject2](ParaView_ProgrammableFilter_reproject2.jpg)
+
