@@ -23,7 +23,7 @@ Below use explaining the way #3. In this case we use Python code integrated into
 
 ## Complex scripts
 
-This script can reproject Unstructured Grid.
+This script reproject Unstructured Grid between to coordinate systems defined by EPSG codes.
 
 ```
 import numpy as np
