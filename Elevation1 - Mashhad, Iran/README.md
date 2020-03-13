@@ -15,4 +15,6 @@ gdalwarp -te 730000 4011500 730500 4012000 ORTHO_RGB/7289-40126_Mashhad.tif 7289
 
 ## Output plots
 
+![Super-resolution DEM](Super-resolution%20DEM.3d.jpg)
+
 ![Super-resolution DEM](Super-resolution%20DEM.jpg)
