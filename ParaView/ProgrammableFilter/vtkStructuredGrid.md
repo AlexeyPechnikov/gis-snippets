@@ -95,4 +95,25 @@ arr = median_filter(arr, footprint=footprint, mode='nearest')
 # prepare output data
 output.PointData.append(arr.ravel(), "arr")
 ```
+
+### vtkStructuredGrid (gaussian filter with different standard deviation (1,2,3) for z,y,x axes)
+
+#### Script
+```
+from vtk.util.numpy_support import vtk_to_numpy
+import numpy as np
+from scipy.ndimage.filters import gaussian_filter
+
+# prepare input data
+print (inputs[0].GetDimensions())
+vtk_arr = inputs[0].PointData['trace']
+shape = inputs[0].GetDimensions()
+arr = vtk_to_numpy(vtk_arr).reshape(shape[::-1])
+
+arr = gaussian_filter(arr, (1,2,3), mode='nearest')
+
+# prepare output data
+output.PointData.append(arr.ravel(), "arr")
+```
+
 ![ParaView ProgrammableFilter StructuredGrid](ParaView_ProgrammableFilter_StructuredGrid.jpg)
