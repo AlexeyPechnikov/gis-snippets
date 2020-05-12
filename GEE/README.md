@@ -1,7 +1,9 @@
-Script for us on https://code.earthengine.google.com/
+Script for use on https://code.earthengine.google.com/
 
 The code below extracted by https://www.newocr.com/ from this paper:
 [Generating a cloud-free, homogeneous Landsat-8 mosaic of Switzerland using Google Earth Engine](https://www.researchgate.net/publication/302589628_Generating_a_cloud-free_homogeneous_Landsat-8_mosaic_of_Switzerland_using_Google_Earth_Engine)
+
+![Switzerland Mosaic using Google Earth Engine](https://github.com/mobigroup/gis-snippets/blob/master/GEE/Switzerland%20Mosaic%20using%20Google%20Earth%20Engine.png)
 
 ```
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
