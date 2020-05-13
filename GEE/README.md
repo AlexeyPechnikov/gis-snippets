@@ -1,4 +1,8 @@
-Sentinel-2 composite from GEE examples with additional filtering by cloudy metadata tag and filtering by months (June-August):
+## Sentinel-2 and Landsat-8 Mosaics Scripts for use on https://code.earthengine.google.com/
+
+### Sentinel-2 composite from GEE examples with additional filtering by cloudy metadata tag and filtering by months (June-August)
+
+![Switzerland Mosaic using Google Earth Engine](https://github.com/mobigroup/gis-snippets/blob/master/GEE/COPERNICUS_S2.png)
 ```
 // This example uses the Sentinel-2 QA band to cloud mask
 // the collection.  The Sentinel-2 cloud flags are less
@@ -42,10 +46,13 @@ var swiss = ee.Geometry.Rectangle(5.4, 45.5, 11, 48.1);
 Map.centerObject(swiss, 8);
 ```
 
-Sentinel-2 Surface Reflectance (SR) composite from GEE examples with additional filtering by cloudy metadata tag and filtering by months (June-August): use the code above replacing "COPERNICUS/S2" to "COPERNICUS/S2_SR".
+### Sentinel-2 Surface Reflectance (SR) composite from GEE examples with additional filtering by cloudy metadata tag and filtering by months (June-August)
 
+![Switzerland Mosaic using Google Earth Engine](https://github.com/mobigroup/gis-snippets/blob/master/GEE/COPERNICUS_S2_SR.png)
 
-Script for use on https://code.earthengine.google.com/
+Use the code above where "COPERNICUS/S2" replaced by "COPERNICUS/S2_SR"
+
+### Generating a cloud-free, homogeneous Landsat-8 mosaic of Switzerland using Google Earth Engine
 
 The code below extracted by https://www.newocr.com/ from this paper:
 [Generating a cloud-free, homogeneous Landsat-8 mosaic of Switzerland using Google Earth Engine](https://www.researchgate.net/publication/302589628_Generating_a_cloud-free_homogeneous_Landsat-8_mosaic_of_Switzerland_using_Google_Earth_Engine)
