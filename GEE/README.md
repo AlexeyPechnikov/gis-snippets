@@ -1,5 +1,82 @@
 ## Sentinel-2 and Landsat-8 Mosaics Scripts for use on https://code.earthengine.google.com/
 
+### Landsat-8 Top of Atmosphere (TOA) composite from GEE examples with additional filtering by cloudy metadata tag and filtering by months (June-August)
+
+![Switzerland Mosaic using Google Earth Engine](https://github.com/mobigroup/gis-snippets/blob/master/GEE/LANDSAT_08_TOA.png)
+
+```
+// This example demonstrates the use of the Landsat 8 QA band to mask clouds.
+
+// Function to mask clouds using the quality band of Landsat 8.
+var maskL8 = function(image) {
+  var qa = image.select('BQA');
+  /// Check that the cloud bit is off.
+  // See https://www.usgs.gov/land-resources/nli/landsat/landsat-collection-1-level-1-quality-assessment-band
+  var mask = qa.bitwiseAnd(1 << 4).eq(0);
+  return image.updateMask(mask);
+}
+
+// Map the function over one year of Landsat 8 TOA data and take the median.
+var composite = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA')
+    .filterDate('2016-01-01', '2020-12-31')
+    .filter(ee.Filter.calendarRange(6,8,'month'))
+    .filter(ee.Filter.lt('CLOUD_COVER', 20))
+    .map(maskL8)
+    .median();
+
+// Display the results
+Map.addLayer(composite, {bands: ['B4', 'B3', 'B2'], min: 0, max: 0.36});
+
+// Set map to Switzerland
+var swiss = ee.Geometry.Rectangle(5.4, 45.5, 11, 48.1);
+Map.centerObject(swiss, 8);
+```
+
+### Landsat-8 Surface Reflectance (SR) composite from GEE examples with additional filtering by cloudy metadata tag and filtering by months (June-August)
+
+![Switzerland Mosaic using Google Earth Engine](https://github.com/mobigroup/gis-snippets/blob/master/GEE/LANDSAT_08_SR.png)
+
+```
+// This example demonstrates the use of the pixel QA band to mask
+// clouds in surface reflectance (SR) data.  It is suitable
+// for use with any of the Landsat SR datasets.
+
+// Function to cloud mask from the pixel_qa band of Landsat 8 SR data.
+function maskL8sr(image) {
+  // Bits 3 and 5 are cloud shadow and cloud, respectively.
+  var cloudShadowBitMask = 1 << 3;
+  var cloudsBitMask = 1 << 5;
+
+  // Get the pixel QA band.
+  var qa = image.select('pixel_qa');
+
+  // Both flags should be set to zero, indicating clear conditions.
+  var mask = qa.bitwiseAnd(cloudShadowBitMask).eq(0)
+      .and(qa.bitwiseAnd(cloudsBitMask).eq(0));
+
+  // Return the masked image, scaled to reflectance, without the QA bands.
+  return image.updateMask(mask).divide(10000)
+      .select("B[0-9]*")
+      .copyProperties(image, ["system:time_start"]);
+}
+
+// Map the function over one year of data.
+var collection = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
+    .filterDate('2016-01-01', '2020-12-31')
+    .filter(ee.Filter.calendarRange(6,8,'month'))
+    .filter(ee.Filter.lt('CLOUD_COVER', 20))
+    .map(maskL8sr)
+
+var composite = collection.median();
+
+// Display the results.
+Map.addLayer(composite, {bands: ['B4', 'B3', 'B2'], min: 0, max: 0.3});
+
+// Set map to Switzerland
+var swiss = ee.Geometry.Rectangle(5.4, 45.5, 11, 48.1);
+Map.centerObject(swiss, 8);
+```
+
 ### Sentinel-2 composite from GEE examples with additional filtering by cloudy metadata tag and filtering by months (June-August)
 
 ![Switzerland Mosaic using Google Earth Engine](https://github.com/mobigroup/gis-snippets/blob/master/GEE/COPERNICUS_S2.png)
@@ -50,7 +127,7 @@ Map.centerObject(swiss, 8);
 
 ![Switzerland Mosaic using Google Earth Engine](https://github.com/mobigroup/gis-snippets/blob/master/GEE/COPERNICUS_S2_SR.png)
 
-Use the code above where "COPERNICUS/S2" replaced by "COPERNICUS/S2_SR"
+Use the code above where 'COPERNICUS/S2' replaced by 'COPERNICUS/S2_SR'
 
 ### Generating a cloud-free, homogeneous Landsat-8 mosaic of Switzerland using Google Earth Engine
 
