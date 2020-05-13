@@ -1,3 +1,50 @@
+Sentinel-2 composite from GEE examples with additional filtering by cloudy metadata tag and filtering by months (June-August):
+```
+// This example uses the Sentinel-2 QA band to cloud mask
+// the collection.  The Sentinel-2 cloud flags are less
+// selective, so the collection is also pre-filtered by the
+// CLOUDY_PIXEL_PERCENTAGE flag, to use only relatively
+// cloud-free granule.
+
+// Function to mask clouds using the Sentinel-2 QA band.
+function maskS2clouds(image) {
+  var qa = image.select('QA60')
+
+  // Bits 10 and 11 are clouds and cirrus, respectively.
+  var cloudBitMask = 1 << 10;
+  var cirrusBitMask = 1 << 11;
+
+  // Both flags should be set to zero, indicating clear conditions.
+  var mask = qa.bitwiseAnd(cloudBitMask).eq(0).and(
+             qa.bitwiseAnd(cirrusBitMask).eq(0))
+
+  // Return the masked and scaled data, without the QA bands.
+  return image.updateMask(mask).divide(10000)
+      .select("B.*")
+      .copyProperties(image, ["system:time_start"])
+}
+
+// Map the function over one year of data and take the median.
+// Load Sentinel-2 TOA reflectance data.
+var composite = ee.ImageCollection('COPERNICUS/S2')
+  .filterDate('2016-01-01', '2020-12-31')
+  .filter(ee.Filter.calendarRange(6,8,'month'))
+  // Pre-filter to get less cloudy granules.
+  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20))
+  .map(maskS2clouds)
+  .median()
+
+// Display the results.
+Map.addLayer(composite, {bands: ['B4', 'B3', 'B2'], min: 0, max: 0.3}, 'RGB')
+
+// Set map to Switzerland
+var swiss = ee.Geometry.Rectangle(5.4, 45.5, 11, 48.1);
+Map.centerObject(swiss, 8);
+```
+
+Sentinel-2 Surface Reflectance (SR) composite from GEE examples with additional filtering by cloudy metadata tag and filtering by months (June-August): use the code above replacing "COPERNICUS/S2" to "COPERNICUS/S2_SR".
+
+
 Script for use on https://code.earthengine.google.com/
 
 The code below extracted by https://www.newocr.com/ from this paper:
