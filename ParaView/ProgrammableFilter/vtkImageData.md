@@ -1,6 +1,6 @@
-## vtkImage to vtkStructuredGrid
+## vtkImageData to vtkStructuredGrid
 
-Convert vtkImage to vtkStructuredGrid.
+Convert vtkImageData to vtkStructuredGrid. Set "Output Data Set Type" to vtkStructuredGrid.
 
 ```
 from vtk.util import numpy_support as vn
