@@ -19,6 +19,8 @@ Below use explaining the way #3. In this case we use Python code integrated into
 
 [ProgrammableFilter vtkPolyData](vtkPolyData.md)
 
+[ProgrammableSource vtkImageData](vtkImageData.md)
+
 [References](../references.md)
 
 ## Complex scripts
