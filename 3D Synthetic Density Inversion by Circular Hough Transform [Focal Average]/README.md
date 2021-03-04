@@ -20,3 +20,5 @@ like to ESRI products) and Fractality Index calculated by discrete spatial power
  The fractality density is linear or step function only. Nonetheless, we still able to estimate average density for complex density profiles.
  To select the best gaussian filter parameters, define suitable geologic scale for model or see heuristical and machine learning approaches to do it.
 
+In addition, we provide [ParaView project file](model.pvsm) to visualize the models in 3D space:
+![](model.pvsm.jpg)
