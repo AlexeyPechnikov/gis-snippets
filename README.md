@@ -2,12 +2,13 @@
 
 This repository provides Python 3 Jupyter notebooks and code snippets for GIS tasks like to
 
-# Google Earth Engine (GEE) Javascript code snippets
+## Spectral approach on example of Antarctica region geological analysis
 
-GEE is great and free of charge spatial processin engine which allows to process millions of available satellite images (Landsat 7/8, Sentinel 2 and much more) in minutes. We use GEE to produce high-quality satellite images and amplitude radar images (SAR) composites
-and extract DEM and so on. See also our project repositories for GEE scripts.
+Here we extend analysis and visualization methods from "9.1 Computing Coherence on 2-D Grids" from "The IHO-IOC GEBCO Cook Book", contributed by K. M. Marks, NOAA Laboratory for Satellite Altimetry, USA. See also more detailed explanation of the original approach in a paper "Radially symmetric coherence between satellite gravity and multibeam bathymetry grids" (Marks and Smith, 2012).
 
-<img src="GEE/Switzerland Mosaic using Google Earth Engine.jpg" width=400>
+For details see LinkedIn pulications [Spectral Coherence between Gravity and Bathymetry Grids](https://www.linkedin.com/pulse/computing-coherence-between-two-dimensional-gravity-grids-pechnikov/) and [The Density-Depth Model by Spectral Fractal Dimension Index](https://www.linkedin.com/pulse/density-model-spectral-fractal-dimension-index-alexey-pechnikov/)
+
+<img src="Antarctica/Pearson%20Correlation%20Coefficient:%20GEBCO_2019%20vs%20Sandwell%20and%20Smith%20Gravity%20Anomaly.jpg" width=400>
 
 ## Spatial data processing in PostgreSQL/PostGIS
 
@@ -32,6 +33,13 @@ It can be done dy different ways and PostgreSQL/PostGIS engine for data processi
  * [3D Seismic Spectral Components Analysis](3D Seismic Spectral Components Analysis) illustrates 3D spatial spectral analysis to check data quality and estimate the real spatial resolution of 3D seismic data
 <img src="3D%20Seismic%20Spectral%20Components%20Analysis/3D%20Seismic%20Data.jpg" width=400>
 
+## Google Earth Engine (GEE) Javascript code snippets
+
+GEE is great and free of charge spatial processin engine which allows to process millions of available satellite images (Landsat 7/8, Sentinel 2 and much more) in minutes. We use GEE to produce high-quality satellite images and amplitude radar images (SAR) composites
+and extract DEM and so on. See also our project repositories for GEE scripts.
+
+<img src="GEE/Switzerland Mosaic using Google Earth Engine.jpg" width=400>
+
 ## Amazon AWS EC2 initialization shell script for Ubuntu 18.04 LTS Bionic GIS installation
 
 For our science and industrial data processing we often need thousands of processing cores and Amazon cloud engine (AWS) is 
@@ -41,5 +49,4 @@ with pre-configured Dask processing cluster and installled as geospatial and sci
  * ParaView Programmable Sources and Filters,
  * Fractality Index calculation by Gravity and DEM for density estimation,
  * Some well-known papers reproduced by spectral approach,
- * ,
  * etc.
