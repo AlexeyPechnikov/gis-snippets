@@ -33,6 +33,12 @@ It can be done dy different ways and PostgreSQL/PostGIS engine for data processi
  * [3D Seismic Spectral Components Analysis](3D%20Seismic%20Spectral%20Components%20Analysis) illustrates 3D spatial spectral analysis to check data quality and estimate the real spatial resolution of 3D seismic data
 <img src="3D%20Seismic%20Spectral%20Components%20Analysis/3D%20Seismic%20Data.jpg" width=400>
 
+## ParaView Programmable Sources and Filters
+
+[ParaView](https://www.paraview.org) is the best 3D/4D data processing and visualization software which we know. And it's completely free  and Open Source and embeddes Python 3 interpretator and libraries for for advanced users. See our [ParaView snippets](ParaView) to do lot's of spatial data processing tasks like to loading different raster and vector data formats, reprojecting and so on inside ParaView. We use the snippets as is and modify them for some one-time tasks. Also, we provide separate repository [N-Cube ParaView plugin for 3D/4D GIS Data Visualization](https://github.com/mobigroup/ParaView-plugins) for common repeatable tasks like to DEM and satellite images and shapefiles 3D visualization, well logs visualization, table data mapping ans more.
+
+<img src="https://github.com/mobigroup/gis-snippets/blob/master/ParaView/ProgrammableFilter/ParaView_ProgrammableFilter_reproject.jpg" width=400>
+
 ## Google Earth Engine (GEE) Javascript code snippets
 
 GEE is great and free of charge spatial processin engine which allows to process millions of available satellite images (Landsat 7/8, Sentinel 2 and much more) in minutes. We use GEE to produce high-quality satellite images and amplitude radar images (SAR) composites
@@ -45,8 +51,3 @@ and extract DEM and so on. See also our project repositories for GEE scripts.
 For our science and industrial data processing we often need thousands of processing cores and Amazon cloud engine (AWS) is 
 the great choice for us. This [AWS init script](aws) allows to create simultaniously cluster of Amazon EC2 instances
 with pre-configured Dask processing cluster and installled as geospatial and science processing libraries as PostgreSQL/PostGIS database engine.
-
- * ParaView Programmable Sources and Filters,
- * Fractality Index calculation by Gravity and DEM for density estimation,
- * Some well-known papers reproduced by spectral approach,
- * etc.
