@@ -2,6 +2,13 @@
 
 This repository provides Python 3 Jupyter notebooks and code snippets for GIS tasks like to
 
+# Google Earth Engine (GEE) code snippets
+
+GEE is great and free of charge spatial processin engine which allows to process millions of available satellite images (Landsat 7/8, Sentinel 2 and much more) in minutes. We use GEE to produce high-quality satellite images and amplitude radar images (SAR) composites
+and extract DEM and so on. See also our project repositories for GEE scripts.
+
+<img src="GEE/Switzerland Mosaic using Google Earth Engine.jpg" width=400>
+
 ## Spatial data processing in PostgreSQL/PostGIS
 
 Usually we use raster data processing whch is fast and well-optimized due to defined data grid.
@@ -16,7 +23,6 @@ It can be done dy different ways and PostgreSQL/PostGIS engine for data processi
 <img src="Spheroid/Gaussian%20Filtering%20on%20Spheroid%20%5BGlobal%5D.jpg" width=400>
 
 <img src="Spheroid/Radon%20Transformation%20on%20Spheroid%20%5BGlobal%5D.jpg" width=400>
-
 
 ## Spatial spectrum processing of gravity, magnetic, DEM and satellite images,
 
