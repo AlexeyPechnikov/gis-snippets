@@ -27,10 +27,10 @@ It can be done dy different ways and PostgreSQL/PostGIS engine for data processi
 
 ## Spatial spectrum processing of gravity, magnetic, DEM and satellite images
 
- * See [Super Resolution](Super Resolution) for gravity enhanced by DEM and [Elevation1 - Mashhad, Iran](Elevation1 - Mashhad, Iran) for DEM enhanced by satellite/orthophoto image by spatial spectrum transfer technique. Check the spatial correlation (coherence) and transfer the waveband with spectrum components amplitudes normalization.
+ * See [Super Resolution](Super%20Resolution) for gravity enhanced by DEM and [Elevation1 - Mashhad, Iran](Elevation1 - Mashhad, Iran) for DEM enhanced by satellite/orthophoto image by spatial spectrum transfer technique. Check the spatial correlation (coherence) and transfer the waveband with spectrum components amplitudes normalization.
 <img src="Elevation1%20-%20Mashhad%2C%20Iran/Super-resolution%20DEM.3d.jpg" width=400>
 
- * [3D Seismic Spectral Components Analysis](3D Seismic Spectral Components Analysis) illustrates 3D spatial spectral analysis to check data quality and estimate the real spatial resolution of 3D seismic data
+ * [3D Seismic Spectral Components Analysis](3D%20Seismic%20Spectral%20Components%20Analysis) illustrates 3D spatial spectral analysis to check data quality and estimate the real spatial resolution of 3D seismic data
 <img src="3D%20Seismic%20Spectral%20Components%20Analysis/3D%20Seismic%20Data.jpg" width=400>
 
 ## Google Earth Engine (GEE) Javascript code snippets
