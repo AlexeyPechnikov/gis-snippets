@@ -1,14 +1,6 @@
 # GIS Snippets
 
-This repository provides Python 3 Jupyter notebooks and code snippets for GIS tasks like to
-
-## Mathematics of Gravity Inversion
-
-See mathematical basics for gravity decomposition transforms applicable for Computer Vision (CV) methods.
-
-[](Inversion%20of%20Gravity%20Mathematics)
-
-<img src="Inversion%20of%20Gravity%20Mathematics/Spheres.jpg" width=400>
+This repository provides Python 3 Jupyter notebooks and code snippets for our common tasks.
 
 ## Spectral approach on example of Antarctica region geological analysis
 
@@ -40,6 +32,26 @@ It can be done dy different ways and PostgreSQL/PostGIS engine for data processi
 
  * [3D Seismic Spectral Components Analysis](3D%20Seismic%20Spectral%20Components%20Analysis) illustrates 3D spatial spectral analysis to check data quality and estimate the real spatial resolution of 3D seismic data
 <img src="3D%20Seismic%20Spectral%20Components%20Analysis/3D%20Seismic%20Data.jpg" width=400>
+
+ * Mathematics of Gravity Inversion
+
+See mathematical basics for gravity decomposition transforms applicable for Computer Vision (CV) methods.
+
+[](Inversion%20of%20Gravity%20Mathematics)
+
+<img src="Inversion%20of%20Gravity%20Mathematics/Spheres.jpg" width=400>
+
+ * [2D Synthetic Density Inversion by Circular Hough Transform [Focal Average]](2D%20Synthetic%20Density%20Inversion%20by%20Circular%20Hough%20Transform%20%5BFocal%20Average%5D)
+
+Simple 2D model illustrates gravity inversion math described above.
+
+<img src="2D%20Synthetic%20Density%20Inversion%20by%20Circular%20Hough%20Transform%20%5BFocal%20Average%5D/model.jpg" width=400>
+
+ * [3D Synthetic Density Inversion by Circular Hough Transform [Focal Average]](3D%20Synthetic%20Density%20Inversion%20by%20Circular%20Hough%20Transform%20%5BFocal%20Average%5D)
+
+A set of 3D models for different synthetic density distributions inversion. In addition, the models include Density Inversion by Fractality Index.
+
+<img src="3D%20Synthetic%20Density%20Inversion%20by%20Circular%20Hough%20Transform%20%5BFocal%20Average%5D/basic1to1.jpg" width=400>
 
 ## ParaView Programmable Sources and Filters
 
