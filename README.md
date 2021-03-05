@@ -2,6 +2,14 @@
 
 This repository provides Python 3 Jupyter notebooks and code snippets for GIS tasks like to
 
+## Mathematics of Gravity Inversion
+
+See mathematical basics for gravity decomposition transforms applicable for Computer Vision (CV) methods.
+
+[](Inversion%20of%20Gravity%20Mathematics)
+
+<img src="Inversion%20of%20Gravity%20Mathematics/Spheres.jpg" width=400>
+
 ## Spectral approach on example of Antarctica region geological analysis
 
 Here we extend analysis and visualization methods from "9.1 Computing Coherence on 2-D Grids" from "The IHO-IOC GEBCO Cook Book", contributed by K. M. Marks, NOAA Laboratory for Satellite Altimetry, USA. See also more detailed explanation of the original approach in a paper "Radially symmetric coherence between satellite gravity and multibeam bathymetry grids" (Marks and Smith, 2012).
