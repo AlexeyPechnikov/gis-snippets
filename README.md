@@ -41,11 +41,11 @@ See mathematical basics for gravity decomposition transforms applicable for Comp
 
 <img src="Inversion%20of%20Gravity%20Mathematics/Spheres.jpg" width=400>
 
- * [3D Synthetic Density Inversion by Circular Hough Transform [Focal Average]](3D%20Synthetic%20Density%20Inversion%20by%20Circular%20Hough%20Transform%20%5BFocal%20Average%5D)
+ * [3D Synthetic Density Inversion by Circular Hough Transform [Focal Average]](Synthetic%20Model%20Inversion)
 
 A set of 3D models for different synthetic density distributions inversion. In addition, the models include Density Inversion by Fractality Index.
 
-<img src="3D%20Synthetic%20Density%20Inversion%20by%20Circular%20Hough%20Transform%20%5BFocal%20Average%5D/basic1to4.jpg" width=400>
+<img src="Synthetic%20Model%20Inversion/basic1to4.jpg" width=400>
 
 ## ParaView Programmable Sources and Filters
 
