@@ -43,7 +43,7 @@ See mathematical basics for gravity decomposition transforms applicable for Comp
 
  * [3D Synthetic Density Inversion by Circular Hough Transform [Focal Average]](Synthetic%20Model%20Inversion)
 
-A set of 3D models for different synthetic density distributions inversion. In addition, the models include Density Inversion by Fractality Index.
+Notebook illustrates geophisical inversion by Radon Transform [Focal Average] of forward gravity produced from 3D synthetic density model. In addition, the model includes Fractality Density calculation on Fractality Index.
 
 <img src="Synthetic%20Model%20Inversion/basic1to4.jpg" width=400>
 
