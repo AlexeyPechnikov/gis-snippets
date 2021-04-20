@@ -487,3 +487,24 @@ def rasterize(image, areas, with_nodata=False):
         df = df[df['class']<255]
     # return dataarray with placeholder 255 and dataframe
     return da, df
+
+# vectorize geometries on dask dataarray
+def vectorize(image):
+    from rasterio import features
+    import geopandas as gpd
+
+    # be careful with ordering
+    res = [float(image.x.diff('x').mean()), float(image.y.diff('y').mean())]
+    xmin = image.x.values.min()
+    ymax = image.y.values.min()
+    transform = [res[0], 0, xmin - res[0]/2, 0, res[1], ymax+res[1]/2]
+    transform
+
+    geoms = (
+            {'properties': {'class': v}, 'geometry': s}
+            for i, (s, v) 
+            in enumerate(shapes(image.values, mask=None, transform=transform))
+    )
+    gdf = gpd.GeoDataFrame.from_features(geoms)
+
+    return gdf
