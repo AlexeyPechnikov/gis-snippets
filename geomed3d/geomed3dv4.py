@@ -502,8 +502,8 @@ def vectorize(image):
 
     geoms = (
             {'properties': {'class': v}, 'geometry': s}
-            for i, (s, v) 
-            in enumerate(shapes(image.values, mask=None, transform=transform))
+            for i, (s, v)
+            in enumerate(features.shapes(image.values, mask=None, transform=transform))
     )
     gdf = gpd.GeoDataFrame.from_features(geoms)
 
