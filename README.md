@@ -12,9 +12,9 @@ For details see LinkedIn pulications [Spectral Coherence between Gravity and Bat
 
 ## Spatial data processing in PostgreSQL/PostGIS
 
-Usually we use raster data processing whch is fast and well-optimized due to defined data grid.
+Usually we use raster data processing whch is fast and well-optimized due to a defined data grid.
 Nevertheless, there are lots of cases when we require for sparse/irregular/multicale data processing.
-It can be done dy different ways and PostgreSQL/PostGIS engine for data processing is powerful and helpful.
+It can be done different ways and the PostgreSQL/PostGIS engine for data processing is powerful and helpful.
 
  * [Spheroid](Spheroid) based spatial data processing for irregular data.
  Here Radon Transform creates bins by radial distance from point and calculate average values for the bins and Gaussian Transform
@@ -43,13 +43,13 @@ See mathematical basics for gravity decomposition transforms applicable for Comp
 
  * [3D Synthetic Density Inversion by Circular Hough Transform [Focal Average]](Synthetic%20Model%20Inversion)
 
-Notebook illustrates geophisical inversion by Radon Transform [Focal Average] of forward gravity produced from 3D synthetic density model. In addition, the model includes Fractality Density calculation on Fractality Index.
+Notebook illustrates geophysical inversion by Radon Transform [Focal Average] of forward gravity produced from 3D synthetic density model. In addition, the model includes Fractality Density calculation on Fractality Index.
 
 <img src="Synthetic%20Model%20Inversion/basic1to4.jpg" width=400>
 
 ## ParaView Programmable Sources and Filters
 
-[ParaView](https://www.paraview.org) is the best 3D/4D data processing and visualization software which we know. And it's completely free  and Open Source and embeddes Python 3 interpretator and libraries for for advanced users. See our [ParaView snippets](ParaView) to do lot's of spatial data processing tasks like to loading different raster and vector data formats, reprojecting and so on inside ParaView. We use the snippets as is and modify them for some one-time tasks. Also, we provide separate repository [N-Cube ParaView plugin for 3D/4D GIS Data Visualization](https://github.com/mobigroup/ParaView-plugins) for common repeatable tasks like to DEM and satellite images and shapefiles 3D visualization, well logs visualization, table data mapping ans more.
+[ParaView](https://www.paraview.org) is the best 3D/4D data processing and visualization software which we know. And it's completely free  and Open Source and embeddes Python 3 interpretator and libraries for advanced users. See our [ParaView snippets](ParaView) to do lots of spatial data processing tasks like loading different raster and vector data formats, reprojecting and so on inside ParaView. We use the snippets as is and modify them for some one-time tasks. Also, we provide separate repository [N-Cube ParaView plugin for 3D/4D GIS Data Visualization](https://github.com/mobigroup/ParaView-plugins) for common repeatable tasks li DEM and satellite images and shapefiles 3D visualization, well logs visualization, table data mapping and more.
 
 <img src="https://github.com/mobigroup/gis-snippets/blob/master/ParaView/ProgrammableFilter/ParaView_ProgrammableFilter_reproject.jpg" width=400>
 
