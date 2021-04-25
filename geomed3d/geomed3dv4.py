@@ -89,7 +89,7 @@ def geomed(lib, raster, grid, radius_min, radius_max, gridded=False, scale_facto
     # create output buffer for calculation function
     dataout = np.empty((mask_length,pygeomed_stats(),(radius_max-radius_min+1)),dtype=np.float32)
 
-    # prepate source raster for calculation function
+    # prepare source raster for calculation function
     datain = raster.values.astype(ctypes.c_float)
 
     # call calculation function
