@@ -12,8 +12,8 @@ For details see LinkedIn pulications [Spectral Coherence between Gravity and Bat
 
 ## Spatial data processing in PostgreSQL/PostGIS
 
-Usually we use raster data processing whch is fast and well-optimized due to a defined data grid.
-Nevertheless, there are lots of cases when we require for sparse/irregular/multicale data processing.
+Usually we use raster data processing which is fast and well-optimized due to a defined data grid.
+Nevertheless, there are lots of cases when we require for sparse/irregular/multi-scale data processing.
 It can be done different ways and the PostgreSQL/PostGIS engine for data processing is powerful and helpful.
 
  * [Spheroid](Spheroid) based spatial data processing for irregular data.
@@ -56,7 +56,7 @@ Notebook illustrates geophysical inversion by Radon Transform [Focal Average] of
 ## Google Earth Engine (GEE) Javascript code snippets
 
 GEE is great and free of charge spatial processin engine which allows to process millions of available satellite images (Landsat 7/8, Sentinel 2 and much more) in minutes. We use GEE to produce high-quality satellite images and amplitude radar images (SAR) composites
-and extract DEM and so on. See also our project repositories for GEE scripts.
+and extract DEM and so on. See also our project repositories for GEE scripts. See also our repository [Google Earth Engine raster to BigQuery SQL convertion project](https://github.com/mobigroup/geo-earthengine)
 
 <img src="GEE/Switzerland Mosaic using Google Earth Engine.jpg" width=400>
 
