@@ -13,8 +13,8 @@ import ctypes
 lib = ctypes.cdll.LoadLibrary('../libgeomed3dv4.so')
 ```
 
-We have been used the libraries for many years to generate some complex statistics on big rasters (which are cropped from the shared code). For now, we've rewrote the code on Python using Numba + Dask for easy usage in Amazon and Google clouds with the identical performance as the native code. But the extension could be a great example of Python + C libraries interaction. 
+We have been used the libraries for many years to generate some complex statistics on big rasters (which are cropped from the shared code). For now, we've rewritten the code in Python using Numba + Dask for easy usage in Amazon and Google clouds, giving identical performance to the native code. The extension could be a great example of Python + C libraries interaction. 
 
 ## Old focal statistics processing library geomed3dv3.py
 
-Old library version 3 [geomed3dv3.py](geomed3dv3.py) provides some helpful functions to open raster and vector files by GDAL, produce ASCII or GeoTIFF files from Xarray DataSets, save datasets to PostgreSQL/PostGIS and so on. For now, that's more easy to use Xarray+RasterIO and GeoPandas for that.
+Old library version 3 [geomed3dv3.py](geomed3dv3.py) provides some helpful functions to open raster and vector files by GDAL, produce ASCII or GeoTIFF files from Xarray DataSets, save datasets to PostgreSQL/PostGIS and so on. For now, that's easier to use Xarray+RasterIO and GeoPandas to do.
