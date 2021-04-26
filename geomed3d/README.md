@@ -1,6 +1,6 @@
 ## Focal statistics processing library geomed3dv4.py
 
-![](focal.gif)
+<img src="focal.gif" width=400>
 
 The python script collects some helpful functions for VTK files export by numpy only and geo data processing and analysis. Also, it's wrapper for binary C coded library **libgeomed3dv4.so** which can be compiled from the sources by script [geomed3dv4.sh](geomed3dv4.sh) **focal** binary is test tool for the binary library to print the focal mask generating by the library. Use [focal.sh](focal.sh) to compile and [focal.ipynb](focal.ipynb) to visualize the output.
 
