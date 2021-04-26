@@ -12,7 +12,7 @@ from geomed3dv4 import *
 and if needed load the binary extension as
 ```
 import ctypes
-lib = ctypes.cdll.LoadLibrary('../libgeomed3dv4.so')
+lib = ctypes.cdll.LoadLibrary('libgeomed3dv4.so')
 ```
 
 We have been used the libraries for many years to generate some complex statistics on big rasters (which are cropped from the shared code). For now, we've rewritten the code in Python using Numba + Dask for easy usage in Amazon and Google clouds, giving identical performance to the native code. The extension could be a great example of Python + C libraries interaction. 
