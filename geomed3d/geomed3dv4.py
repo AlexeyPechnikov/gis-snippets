@@ -2,7 +2,13 @@
 #from numpy.ctypeslib import ndpointer
 #import numpy as np
 #import xarray as xr
-#import pandas as pd
+
+import pandas as pd
+# define Pandas display settings
+pd.set_option('display.max_rows', 5)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', None)
+pd.set_option('display.max_colwidth', None)
 
 # it's similar to xr.open_rasterio() but attributes are different
 # function to load source GeoTIF image
@@ -365,6 +371,28 @@ def unit_ring_2d(r):
 #import urllib
 #import shutil
 #import ee
+
+
+# Function to mask clouds using the Sentinel-2 QA band.
+def GEEmaskS2clouds(image):
+    # Get the pixel QA band.
+    qa = image.select('QA60')
+
+    # Bits 10 and 11 are clouds and cirrus, respectively.
+    cloudBitMask = 1 << 10
+    cirrusBitMask = 1 << 11
+
+    # Both flags should be set to zero, indicating clear conditions.
+    cloudMask = qa.bitwiseAnd(cloudBitMask).eq(0)
+    cirrusMask = qa.bitwiseAnd(cirrusBitMask).eq(0)
+
+    # Return the masked and scaled data, without the QA bands.
+    return image\
+        .updateMask(cloudMask)\
+        .updateMask(cirrusMask)\
+        .divide(10000)\
+        .select("B.*")\
+        .copyProperties(image, ["system:time_start"])
 
 # works for GEE geographic coordinates only
 def gee_image2rect(GEEimage, reorder=False):
