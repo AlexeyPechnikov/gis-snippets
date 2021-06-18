@@ -9,12 +9,6 @@ https://www.intelligence-airbusds.com/en/9317-sample-imagery-detail?product=1889
 ## Prepare datasets
 
 ```
-gdalwarp -te 730000 4011500 730500 4012000 MMashhad-DEM/ashhad-DEM.TIF Mashhad-DEM.sample.tif
-gdalwarp -te 730000 4011500 730500 4012000 ORTHO_RGB/7289-40126_Mashhad.tif 7289-40126_Mashhad.sample.tif
+gdalwarp -te 730000 4011500 730500 4012000 MMashhad-DEM/ashhad-DEM.TIF Mashhad-DEM.tif
+gdalwarp -te 730000 4011500 730500 4012000 ORTHO_RGB/7289-40126_Mashhad.tif 7289-40126_Mashhad.tif
 ```
-
-## Output plots
-
-![Super-resolution DEM](Super-resolution%20DEM.3d.jpg)
-
-![Super-resolution DEM](Super-resolution%20DEM.jpg)
