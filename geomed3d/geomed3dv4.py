@@ -1,8 +1,8 @@
-import os, sys, ctypes
-from numpy.ctypeslib import ndpointer
-import numpy as np
-import xarray as xr
-import pandas as pd
+#import os, sys, ctypes
+#from numpy.ctypeslib import ndpointer
+#import numpy as np
+#import xarray as xr
+#import pandas as pd
 
 # it's similar to xr.open_rasterio() but attributes are different
 # function to load source GeoTIF image
@@ -10,11 +10,18 @@ import pandas as pd
 
 # cell center (0.5, 0.5) should be pixel (0,0) but not rounded (1,1)
 def geomed_round(arr):
+    import numpy as np
     #return np.array([ (round(x,0)-1 if (x % 1 == 0.5) else round(x,0) ) for x in arr ]).astype(int)
     return np.array(arr).astype(int)
 
 # main geomed library function for statistics calculations
 def geomed(lib, raster, grid, radius_min, radius_max, gridded=False, scale_factor=0.707):
+    import os, sys, ctypes
+    from numpy.ctypeslib import ndpointer
+    import numpy as np
+    import xarray as xr
+    import pandas as pd
+
     # build mask of input points
     _grid = grid.copy()
     # use zero surface if z is not defined
@@ -162,9 +169,12 @@ def geomed(lib, raster, grid, radius_min, radius_max, gridded=False, scale_facto
 
 #https://en.wikipedia.org/wiki/Gaussian_filter
 #https://docs.scipy.org/doc/scipy-0.16.1/reference/generated/scipy.ndimage.filters.gaussian_filter.html
-from scipy.ndimage.filters import gaussian_filter
+#from scipy.ndimage.filters import gaussian_filter
 
 def raster_gamma_range(raster0, g1, g2, backward=False):
+    import numpy as np
+    from scipy.ndimage.filters import gaussian_filter
+
     raster = raster0.copy()
     raster.values = raster.values.astype(np.float32)
     if backward:
@@ -176,6 +186,9 @@ def raster_gamma_range(raster0, g1, g2, backward=False):
     return raster
 
 def raster_gamma(raster0, g, backward=False):
+    import numpy as np
+    from scipy.ndimage.filters import gaussian_filter
+
     raster = raster0.copy()
     if backward:
         raster.values = gaussian_filter(raster.values.astype(np.float32),g)
@@ -190,6 +203,9 @@ def raster_gamma(raster0, g, backward=False):
 def vtk2da(filename, varname='None'):
     from vtk import vtkStructuredPointsReader
     from vtk.util import numpy_support as VN
+    import numpy as np
+    import numpy as np
+    import xarray as xr
 
     reader = vtkStructuredPointsReader()
     reader.SetFileName(filename)
@@ -214,6 +230,7 @@ def vtk2da(filename, varname='None'):
 def da2vtk_scalar(da, filename, filter_by_output_range=None):
     import numpy as np
     import sys
+
     vals = da.values
     vals = 100.*(vals - np.nanmin(vals))/(np.nanmax(vals)-np.nanmin(vals))
     if not filter_by_output_range is None:
@@ -255,6 +272,7 @@ LOOKUP_TABLE default
 def ds2vtk_vector(ds, name, filename):
     import numpy as np
     import sys
+
     da = ds.transpose('z','y','x')
     header = """# vtk DataFile Version 4.2
 vtk output
@@ -283,6 +301,7 @@ VECTORS %s float
 def da2vtk1_scalar_int(da, filename):
     import numpy as np
     import sys
+
     vals = da.values
     header = """# vtk DataFile Version 1.0
 vtk output
@@ -313,6 +332,7 @@ LOOKUP_TABLE default
 
 def unit_circle_2d(r):
     import numpy as np
+
     A = np.arange(-r,r+1)**2
     dists = np.sqrt( A[:,None] + A)
     # circle
@@ -329,6 +349,7 @@ def unit_circle_2d(r):
 
 def unit_ring_2d(r):
     import numpy as np
+
     A = np.arange(-r,r+1)**2
     dists = np.sqrt( A[:,None] + A)
     if r <= 2:
@@ -345,9 +366,23 @@ def unit_ring_2d(r):
 #import shutil
 #import ee
 
+# works for GEE geographic coordinates only
+def gee_image2rect(GEEimage, reorder=False):
+    import numpy as np
+
+    coords = GEEimage.getInfo()['properties']['system:footprint']['coordinates'][0]
+    lats = np.asarray(coords)[:,1]
+    lons = np.asarray(coords)[:,0]
+    if not reorder:
+        return [lons.min(), lats.min(), lons.max(), lats.max()]
+    else:
+        return [lons.min(), lons.max(), lats.min(), lats.max()]
+
 # create worldfile to define image coordinates
-def worldfile_tofile(fname, area, dimensions):
+def worldfile_tofile(fname, GEEimage, dimensions):
     import os
+
+    area = gee_image2rect(GEEimage)
     name, ext = os.path.splitext(fname)
     # use QGIS worldfile names convention 
     jext = ext[1] + ext[-1] + 'w'
@@ -362,32 +397,24 @@ def worldfile_tofile(fname, area, dimensions):
 def geeurl_tofile(GEEurl, fname):
     import urllib
     import shutil
+
     with urllib.request.urlopen(GEEurl) as response, open(fname, 'wb') as outfile:
         shutil.copyfileobj(response, outfile)
 
 def gee_preview_tofile(GEEimage, vis, dimensions, fname=None):
-    import ee
-    import geopandas as gpd
-    from shapely.ops import Polygon
-    # WGS84 coordinates
-    geom = Polygon(GEEimage.getInfo()['properties']['system:footprint']['coordinates'][0])
-    # define 1st band projection
-    proj = GEEimage.getInfo()['bands'][0]['crs']
-    # extract area bounds in the 1st band projection
-    area = gpd.GeoSeries(geom,crs='epsg:4326').to_crs(proj)[0].bounds
     GEEurl = GEEimage\
         .visualize(**vis)\
         .getThumbURL({'dimensions':dimensions, 'format': 'jpg'})
     #print (GEEurl)
     if fname is not None:
         geeurl_tofile(GEEurl, fname)
-        worldfile_tofile(fname, area, dimensions)
+        worldfile_tofile(fname, GEEimage, dimensions)
     return {'url': GEEurl, 'width': dimensions[0], 'height': dimensions[1]}
 
-def split_rect(rect, n):
-    import numpy as np
-    lats = np.linspace(rect[0], rect[2], n+1)
-    lons = np.linspace(rect[1], rect[3], n+1)
+def split_rect(GEEimage, n):
+    rect = gee_image2rect(GEEimage)
+    lats = np.linspace(rect[1], rect[3], n+1)
+    lons = np.linspace(rect[0], rect[2], n+1)
     #print (lats, lons)
     cells = []
     for lt1, lt2 in zip(lats.ravel()[:-1], lats.ravel()[1:]):
@@ -399,6 +426,7 @@ def split_rect(rect, n):
 def zipsbands2image(files):
     import xarray as xr
     import zipfile
+
     dss = []
     # merge separate file areas
     for fname in sorted(files):
