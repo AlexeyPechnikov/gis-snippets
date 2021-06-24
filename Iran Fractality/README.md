@@ -1,0 +1,3 @@
+See Python Jupyter notebooks [GEE ALOS AW3D30 DEM Fractality for Ravar, Kerman Province, Iran.ipynb](https://github.com/mobigroup/gis-snippets/blob/master/Iran%20Fractality/GEE%20ALOS%20AW3D30%20DEM%20Fractality%20for%20Ravar%2C%20Kerman%20Province%2C%20Iran.ipynb) and [ALOS AW3D30 DEM Fractality for Ravar, Kerman Province, Iran.ipynb](https://github.com/mobigroup/gis-snippets/blob/master/Iran%20Fractality/ALOS%20AW3D30%20DEM%20Fractality%20for%20Ravar%2C%20Kerman%20Province%2C%20Iran.ipynb)
+
+![image](https://github.com/mobigroup/gis-snippets/blob/master/Iran%20Fractality/Fractality%20for%20Ravar%2C%20Kerman%20Province%2C%20Iran.jpg)
