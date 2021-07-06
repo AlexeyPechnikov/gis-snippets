@@ -13,3 +13,9 @@ See notebook [geomed3dv4.ipynb](geomed3dv4.ipynb) for the complete example.
 ## Old focal statistics processing library geomed3dv3.py
 
 Old library version 3 [geomed3dv3.py](geomed3dv3.py) provides some helpful functions to open raster and vector files by GDAL, produce ASCII or GeoTIFF files from Xarray DataSets, save datasets to PostgreSQL/PostGIS and so on. For now, that's easier to use Xarray+RasterIO and GeoPandas to do.
+
+## Straight Line Hough Transform for Lineaments Caclulation
+
+See the notebook
+[Straight Line Hough Transform](Straight%20Line%20Hough%20Transform.ipynb)
+![](Straight%20Line%20Hough%20Transform.jpg)
