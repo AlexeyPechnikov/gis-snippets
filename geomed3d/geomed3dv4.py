@@ -15,10 +15,10 @@ pd.set_option('display.max_colwidth', None)
 #def gdal_raster(src_filename, NoData=None)
 
 # cell center (0.5, 0.5) should be pixel (0,0) but not rounded (1,1)
-def geomed_round(arr):
-    import numpy as np
-    #return np.array([ (round(x,0)-1 if (x % 1 == 0.5) else round(x,0) ) for x in arr ]).astype(int)
-    return np.array(arr).astype(int)
+#def geomed_round(arr):
+#    import numpy as np
+#    #return np.array([ (round(x,0)-1 if (x % 1 == 0.5) else round(x,0) ) for x in arr ]).astype(int)
+#    return np.array(arr).astype(int)
 
 # main geomed library function for statistics calculations
 def geomed(lib, raster, grid, radius_min, radius_max, gridded=False, scale_factor=0.707):
@@ -52,13 +52,15 @@ def geomed(lib, raster, grid, radius_min, radius_max, gridded=False, scale_facto
 
     if gridded:
         mask = xr.Dataset.from_dataframe(_grid.set_index(['y','x']))
-        mask['pixelx'] = geomed_round((mask.x - raster.ulx)/raster.xres)
-        mask['pixely'] = geomed_round((mask.y - raster.uly)/raster.yres)
+        # cell center (0.5, 0.5) should be pixel (0,0) but not rounded (1,1)
+        # np.array(arr).astype(int)
+        mask['pixelx'] = np.array((mask.x - raster.ulx)/raster.xres).astype(int)
+        mask['pixely'] = np.array((mask.y - raster.uly)/raster.yres).astype(int)
         # use zero surface depth instead of missed values
         mask.z.values = mask.z.fillna(0)
     else:
-        _grid['pixelx'] = geomed_round((_grid.x - raster.ulx)/raster.xres)
-        _grid['pixely'] = geomed_round((_grid.y - raster.uly)/raster.yres)
+        _grid['pixelx'] = np.array((_grid.x - raster.ulx)/raster.xres).astype(int)
+        _grid['pixely'] = np.array((_grid.y - raster.uly)/raster.yres).astype(int)
         mask = xr.Dataset.from_dataframe(_grid)
     del _grid
 
@@ -233,18 +235,24 @@ def vtk2da(filename, varname='None'):
 
 
 ### Save to VTK (version 1) files
-def da2vtk_scalar(da, filename, filter_by_output_range=None):
+# use also instead of da2vtk1_scalar_int
+def da2vtk_scalar(da, filename):
     import numpy as np
     import sys
+    # VTK compatible datatype name string
+    # bit, unsigned_char, char, unsigned_short, short, unsigned_int, int, unsigned_long, long, float, or double
+    dtypes = {np.float64: 'float', np.float32: 'float', np.int32: 'int32'}
+    # convert to output type
+    otypes = {np.float64: np.float32, np.float32: np.float32, np.int32: np.int32}
 
-    vals = da.values
-    vals = 100.*(vals - np.nanmin(vals))/(np.nanmax(vals)-np.nanmin(vals))
-    if not filter_by_output_range is None:
-        vals[(vals<filter_by_output_range[0])|(vals>filter_by_output_range[1])] = np.nan
-        vals = 100.*(vals - np.nanmin(vals))/(np.nanmax(vals)-np.nanmin(vals))
-    # Use "A*(A/A)" expression in Voxler 4 "math" unit
-    #vals[np.isnan(vals)] = 0
-    #vals[vals==0] = np.nan
+    # define data type
+    dtype = type(vals[0])
+
+    # convert range to % range for float data types
+    if dtype in [np.float32, np.float64]:
+        vals = 100.*(da.values - np.nanmin(da.values))/(np.nanmax(da.values)-np.nanmin(da.values))
+    else:
+        vals = da.values
 
     header = """# vtk DataFile Version 1.0
 vtk output
@@ -254,7 +262,7 @@ DIMENSIONS %d %d %d
 ASPECT_RATIO %f %f %f
 ORIGIN %f %f %f
 POINT_DATA %d
-SCALARS %s float
+SCALARS %s %s
 LOOKUP_TABLE default
 """ % (da.x.shape[0],da.y.shape[0],da.z.shape[0],
                 (np.nanmax(da.x.values)-np.nanmin(da.x.values))/(da.x.shape[0]-1),
@@ -264,14 +272,14 @@ LOOKUP_TABLE default
                 np.nanmin(da.y.values),
                 np.nanmin(da.z.values),
                 da.x.shape[0]*da.y.shape[0]*da.z.shape[0],
-                da.name)
+                da.name, dtypes[dtype])
 
     with open(filename, 'wb') as f:
         if sys.version_info >= (3, 0):
             f.write(bytes(header,'utf-8'))
         else:
             f.write(header)
-        np.array(vals, dtype=np.float32).byteswap().tofile(f)
+        vals.astype(otypes[dtype]).byteswap().tofile(f)
 
 ### Save vector with components (i,j,k) to VTK (version 4.2) binary files
 # ds2vtk3(ds, 'velocity', fname + '.vtk')
@@ -303,38 +311,6 @@ VECTORS %s float
         f.write(bytes(header,'utf-8'))
         arr = np.stack([da.i.values, da.j.values, da.k.values],axis=-1)
         np.array(arr, dtype=np.float32).byteswap().tofile(f)
-
-def da2vtk1_scalar_int(da, filename):
-    import numpy as np
-    import sys
-
-    vals = da.values
-    header = """# vtk DataFile Version 1.0
-vtk output
-BINARY
-DATASET STRUCTURED_POINTS
-DIMENSIONS %d %d %d
-ASPECT_RATIO %f %f %f
-ORIGIN %f %f %f
-POINT_DATA %d
-SCALARS %s int32
-LOOKUP_TABLE default
-""" % (da.x.shape[0],da.y.shape[0],da.z.shape[0],
-                (np.nanmax(da.x.values)-np.nanmin(da.x.values))/(da.x.shape[0]-1),
-                (np.nanmax(da.y.values)-np.nanmin(da.y.values))/(da.y.shape[0]-1),
-                (np.nanmax(da.z.values)-np.nanmin(da.z.values))/(da.z.shape[0]-1),
-                np.nanmin(da.x.values),
-                np.nanmin(da.y.values),
-                np.nanmin(da.z.values),
-                da.x.shape[0]*da.y.shape[0]*da.z.shape[0],
-                da.name)
-
-    with open(filename, 'wb') as f:
-        if sys.version_info >= (3, 0):
-            f.write(bytes(header,'utf-8'))
-        else:
-            f.write(header)
-        np.array(vals, dtype=np.int32).byteswap().tofile(f)
 
 def unit_circle_2d(r):
     import numpy as np
@@ -400,7 +376,7 @@ def GEEmaskS1edges(image):
     maskedImage = image.mask().And(edge.Not())
     return image.updateMask(maskedImage)
 
-# works for GEE geographic coordinates only
+# works for GEE geographic coordinates only, redefine it for projected coordinates
 def gee_image2rect(GEEimage, reorder=False):
     import numpy as np
 
@@ -412,23 +388,32 @@ def gee_image2rect(GEEimage, reorder=False):
     else:
         return [lons.min(), lons.max(), lats.min(), lats.max()]
 
+# example: redefine library function for projected coordinates
+#def gee_image2rect(GEEimage, reorder=False):
+#    if not reorder:
+#        return [point[0]-radius, point[1]-radius, point[0]+radius, point[1]+radius]
+#    else:
+#        return [point[0]-radius, point[0]+radius, point[1]-radius, point[1]+radius]
+
 # create worldfile to define image coordinates
-def worldfile_tofile(fname, GEEimage, dimensions):
+# add 1/2 pixel border offset for compability
+def gee_worldfile_tofile(fname, GEEimage, dimensions):
     import os
 
     area = gee_image2rect(GEEimage)
+    print (area)
     name, ext = os.path.splitext(fname)
-    # use QGIS worldfile names convention 
+    # use QGIS worldfile names convention
     jext = ext[1] + ext[-1] + 'w'
     fname = os.path.join(str(os.extsep).join([name,jext]))
     with open(fname, 'w') as outfile:
         xres = (area[2]-area[0])/dimensions[0]
         yres = (area[1]-area[3])/dimensions[1]
-        coefficients = [xres, 0, 0, yres, area[0], area[3]]
+        coefficients = [xres, 0, 0, yres, area[0]+xres/2, area[3]+yres/2]
         print('\n'.join(map(str, coefficients)), file=outfile)
 
 # download GEE URL and save to file
-def geeurl_tofile(GEEurl, fname):
+def gee_url_tofile(GEEurl, fname):
     import urllib
     import shutil
 
@@ -441,11 +426,11 @@ def gee_preview_tofile(GEEimage, vis, dimensions, fname=None):
         .getThumbURL({'dimensions':dimensions, 'format': 'jpg'})
     #print (GEEurl)
     if fname is not None:
-        geeurl_tofile(GEEurl, fname)
-        worldfile_tofile(fname, GEEimage, dimensions)
+        gee_url_tofile(GEEurl, fname)
+        gee_worldfile_tofile(fname, GEEimage, dimensions)
     return {'url': GEEurl, 'width': dimensions[0], 'height': dimensions[1]}
 
-def split_rect(GEEimage, n):
+def gee_split_rect(GEEimage, n):
     rect = gee_image2rect(GEEimage)
     lats = np.linspace(rect[1], rect[3], n+1)
     lons = np.linspace(rect[0], rect[2], n+1)
@@ -457,7 +442,7 @@ def split_rect(GEEimage, n):
             cells.append(cell)
     return cells
 
-def zipsbands2image(files):
+def gee_zipsbands2image(files):
     import xarray as xr
     import zipfile
 
