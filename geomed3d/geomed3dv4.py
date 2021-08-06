@@ -570,3 +570,41 @@ def vectorize(image):
     gdf = gpd.GeoDataFrame.from_features(geoms)
 
     return gdf
+
+def spectrum(raster, gammas, scale):
+    import xarray as xr
+
+    rasters = []
+    print (f'Calculate spectrum: {len(gammas)} wavelengths')
+    for g in gammas:
+        print (".", end = '')
+        _raster = raster_gamma_range(raster, g-.5, g+.5, backward=True)
+        _raster['r'] = g*scale
+        rasters.append(_raster)
+    print ()
+    return xr.concat(rasters, dim='r')
+
+def correlogram(raster1, raster2, gammas, scale):
+    import xarray as xr
+    import numpy as np
+    import pandas as pd
+
+    spectrum1 = spectrum(raster1, gammas, scale)
+    spectrum2 = spectrum(raster2, gammas, scale)
+
+    corrs = []
+    print (f'Calculate correlogram: {len(gammas)} wavelengths')
+    for ridx in range(len(gammas)):
+        print (".", end = '')
+        _spectrum2 = spectrum2[ridx]
+        for didx in range(len(gammas)):
+            _spectrum1 = spectrum1[didx]
+            df = pd.DataFrame({'r1': _spectrum1.values.flatten(), 'r2': _spectrum2.values.flatten()})
+            corr = round((df.corr()).iloc[0,1],2)
+            corrs.append(corr)
+    print ()
+    da_corr = xr.DataArray(np.array(corrs).reshape([len(gammas),len(gammas)]),
+                          coords=[scale*gammas,scale*gammas],
+                          dims=['r2','r1'])
+
+    return da_corr
