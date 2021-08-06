@@ -394,6 +394,12 @@ def GEEmaskS2clouds(image):
         .select("B.*")\
         .copyProperties(image, ["system:time_start"])
 
+# Function to mask edges on Sentinel-1 GRD image
+def GEEmaskS1edges(image):
+    edge = image.lt(-30.0)
+    maskedImage = image.mask().And(edge.Not())
+    return image.updateMask(maskedImage)
+
 # works for GEE geographic coordinates only
 def gee_image2rect(GEEimage, reorder=False):
     import numpy as np
