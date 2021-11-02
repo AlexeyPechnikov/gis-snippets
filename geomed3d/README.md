@@ -8,7 +8,7 @@ We have been used the library for many years to generate some complex statistics
 
 ## Compile and use geomed3 library on MacOS using HomeBrew GCC
 
-See notebook [geomed3dv4.ipynb](geomed3dv4.ipynb) for the complete example.
+See notebook [geomed3dv4.ipynb](geomed3dv4.ipynb) and the live notebook on Google Colab [Geophysical Inversion Library: GeoMed3d](https://colab.research.google.com/drive/1sle-WBlV_Z8bBv9dYpxe82FSevkJ6rWn?usp=sharing)
 
 ## Old focal statistics processing library geomed3dv3.py
 
