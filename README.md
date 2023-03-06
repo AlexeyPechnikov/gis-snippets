@@ -2,6 +2,8 @@
 
 This repository provides Python 3 Jupyter notebooks and code snippets for our common tasks.
 
+Hint: You can sponsor the software and examples development on [Patreon](https://www.patreon.com/pechnikov).
+
 ## Spectral approach on example of Antarctica region geological analysis
 
 Here we extend analysis and visualization methods from "9.1 Computing Coherence on 2-D Grids" from "The IHO-IOC GEBCO Cook Book", contributed by K. M. Marks, NOAA Laboratory for Satellite Altimetry, USA. See also more detailed explanation of the original approach in a paper "Radially symmetric coherence between satellite gravity and multibeam bathymetry grids" (Marks and Smith, 2012).
